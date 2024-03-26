@@ -51,6 +51,14 @@ const routes = [
                           title: '编辑文章'
                       }
                   },
+                  {
+                      path: 'tag-control',
+                      name: 'tag-control',
+                      component: () => import('../views/tag-control/TagList.vue'),
+                      meta: {
+                          title: '标签管理'
+                      }
+                  },
               ]
           },
       ]

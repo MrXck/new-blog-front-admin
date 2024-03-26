@@ -116,6 +116,19 @@ const menuOptions = [
         key: '/article-control/article-list',
         icon: renderIcon(AppsSharp)
       },
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'tag-control'
+              }
+            },
+            {default: () => "标签管理"}
+        ),
+        key: '/article-control/tag-control',
+        icon: renderIcon(AppsSharp)
+      },
     ]
   },
 ]
