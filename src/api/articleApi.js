@@ -23,3 +23,7 @@ export function updateArticleByIdApi(data) {
 export function uploadArticleTopApi(id, isTop) {
     return request.get(`/article/top/${id}/${isTop}`)
 }
+
+export function uploadArticleFeaturedApi(id, isTop) {
+    return request.get(`/article/featured/${id}/${isTop}`)
+}

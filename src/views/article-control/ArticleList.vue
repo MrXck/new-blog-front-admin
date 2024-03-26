@@ -3,7 +3,12 @@ import {NButton, NDataTable, NImage, NInput, NPagination, NSpace, NSwitch, useMe
 import {to} from '@/utils/routerUtils'
 import {h, onMounted, reactive, ref} from "vue";
 import {IMAGE_URL} from "@/utils/Constant";
-import {deleteArticleByIdApi, getArticlesByPageApi, uploadArticleTopApi} from "@/api/articleApi";
+import {
+  deleteArticleByIdApi,
+  getArticlesByPageApi,
+  uploadArticleFeaturedApi,
+  uploadArticleTopApi
+} from "@/api/articleApi";
 
 
 const data = reactive([])
@@ -82,7 +87,13 @@ const columns = [
         'checked-value': 1,
         'unchecked-value': 0,
         'on-update:value': (value) => {
-          console.log(value)
+          uploadArticleFeaturedApi(row.id, value).then(res => {
+            if (res.code === 0) {
+              message.success('操作成功')
+            } else {
+              message.error(res.msg)
+            }
+          })
         }
       })
     }
