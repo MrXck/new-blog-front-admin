@@ -129,6 +129,19 @@ const menuOptions = [
         key: '/article-control/tag-control',
         icon: renderIcon(AppsSharp)
       },
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'category-control'
+              }
+            },
+            {default: () => "分类管理"}
+        ),
+        key: '/article-control/category-control',
+        icon: renderIcon(AppsSharp)
+      },
     ]
   },
 ]

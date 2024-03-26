@@ -54,9 +54,17 @@ const routes = [
                   {
                       path: 'tag-control',
                       name: 'tag-control',
-                      component: () => import('../views/tag-control/TagList.vue'),
+                      component: () => import('../views/tag-control/TagList'),
                       meta: {
                           title: '标签管理'
+                      }
+                  },
+                  {
+                      path: 'category-control',
+                      name: 'category-control',
+                      component: () => import('../views/category-control/CategoryList'),
+                      meta: {
+                          title: '分类管理'
                       }
                   },
               ]

@@ -1,8 +1,8 @@
 <script setup>
 import {NButton, NDataTable, NInput, NPagination, NSpace, useMessage, NModal, NCard, NIcon} from 'naive-ui'
 import {h, onMounted, reactive, ref} from "vue";
-import {addTagApi, deleteTagByIdApi, getTagByPageApi, updateTagApi} from "@/api/tagApi";
 import {Close} from "@vicons/ionicons5";
+import {addCategoryApi, deleteCategoryByIdApi, getCategoryPageApi, updateCategoryApi} from "@/api/categoryApi";
 
 const update = ref({
   id: '',
@@ -82,7 +82,7 @@ const pagination = reactive({
 })
 
 function init() {
-  getTagByPageApi({
+  getCategoryPageApi({
     pageSize: pagination.pageSize,
     pageNum: pagination.page,
     keyword: keyword.value
@@ -104,7 +104,7 @@ function init() {
 }
 
 function deleteById(id) {
-  deleteTagByIdApi(id).then(res => {
+  deleteCategoryByIdApi(id).then(res => {
     if (res.code === 0) {
       message.success('操作成功')
       init()
@@ -119,7 +119,7 @@ function rowKey(row) {
 }
 
 function updateData() {
-  updateTagApi(update.value).then(res => {
+  updateCategoryApi(update.value).then(res => {
     if (res.code === 0) {
       message.success('操作成功')
       showUpdateModal.value = false
@@ -132,7 +132,7 @@ function updateData() {
 }
 
 function addData() {
-  addTagApi(add.value).then(res => {
+  addCategoryApi(add.value).then(res => {
     if (res.code === 0) {
       message.success('操作成功')
       showAddModal.value = false
@@ -200,10 +200,10 @@ onMounted(() => {
       </template>
       <n-space align="center">
         <n-space>
-          标签名
+          分类名
         </n-space>
         <n-space>
-          <n-input v-model:value="add.name" placeholder="请输入标签名"/>
+          <n-input v-model:value="add.name" placeholder="请输入分类名"/>
         </n-space>
       </n-space>
       <template #footer>
@@ -232,10 +232,10 @@ onMounted(() => {
       </template>
       <n-space align="center">
         <n-space>
-          标签名
+          分类名
         </n-space>
         <n-space>
-          <n-input v-model:value="update.name" placeholder="请输入标签名"/>
+          <n-input v-model:value="update.name" placeholder="请输入分类名"/>
         </n-space>
       </n-space>
       <template #footer>
