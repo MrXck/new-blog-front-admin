@@ -2,8 +2,8 @@
 import {NButton, NDataTable, NImage, NInput, NPagination, NSpace, NSwitch, useMessage, NTag} from 'naive-ui'
 import {to} from '@/utils/routerUtils'
 import {h, onMounted, reactive, ref} from "vue";
-import {deleteArticleByIdApi, getArticlesByPageApi} from "@/utils/apiUtils";
 import {IMAGE_URL} from "@/utils/Constant";
+import {deleteArticleByIdApi, getArticlesByPageApi, uploadArticleTopApi} from "@/api/articleApi";
 
 
 const data = reactive([])
@@ -35,11 +35,9 @@ const columns = [
   {
     title: '标签',
     render(row) {
-
-
       return h("div", {
         'style': 'display: flex; flex-wrap: wrap;'
-      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {}, item.tagName))])
+      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {type: 'info'}, item.tagName))])
     }
   },
   {
@@ -47,25 +45,31 @@ const columns = [
     key: 'type',
     render(row) {
       if (row.type === 1) {
-        return h(NTag, {}, "原创")
+        return h(NTag, {type: 'error'}, "原创")
       }
       if (row.type === 2) {
-        return h(NTag, {}, "转载")
+        return h(NTag, {type: 'error'}, "转载")
       }
       if (row.type === 3) {
-        return h(NTag, {}, "翻译")
+        return h(NTag, {type: 'error'}, "翻译")
       }
     }
   },
   {
-    title: '顶置',
+    title: '置顶',
     render(row) {
       return h(NSwitch, {
         'default-value': row.isTop,
         'checked-value': 1,
         'unchecked-value': 0,
         'on-update:value': (value) => {
-          console.log(value)
+          uploadArticleTopApi(row.id, value).then(res => {
+            if (res.code === 0) {
+              message.success('操作成功')
+            } else {
+              message.error(res.msg)
+            }
+          })
         }
       })
     }
@@ -100,7 +104,7 @@ const columns = [
                   type: 'info',
                   ghost: true,
                   onClick: () => {
-                    to({name: 'note-edit', params: {id: row.id}})
+                    to({name: 'article-edit', params: {id: row.id}})
                   }
                 },
                 {default: () => "编辑"}),

@@ -134,14 +134,6 @@
 import {NSpace, NInput, NButton, useMessage, NIcon, NUpload, NUploadDragger, NSelect, NSwitch, NImage} from 'naive-ui'
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
-import {
-  addArticleApi,
-  getAllTagApi,
-  getArticleByIdApi, getArticleTagApi,
-  getCategoryPageApi, saveArticleTagApi,
-  updateArticleByIdApi,
-  uploadImageApi
-} from "@/utils/apiUtils";
 import {ArchiveOutline as ArchiveIcon} from "@vicons/ionicons5";
 import {Editor} from '@bytemd/vue-next'
 import gfm from "@bytemd/plugin-gfm";
@@ -154,6 +146,11 @@ import zhHans from 'bytemd/locales/zh_Hans.json'
 import 'bytemd/dist/index.css'
 import 'highlight.js/styles/tokyo-night-dark.min.css'
 import {ArticleStatus, ArticleType, IMAGE_URL} from "@/utils/Constant";
+import {getAllTagApi} from "@/api/tagApi";
+import {getCategoryPageApi} from "@/api/categoryApi";
+import {addArticleApi, getArticleByIdApi, updateArticleByIdApi} from "@/api/articleApi";
+import {uploadImageApi} from "@/api/uploadApi";
+import {getArticleTagApi, saveArticleTagApi} from "@/api/articleTagApi";
 
 const plugins = [
   gfm(),
