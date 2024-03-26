@@ -144,6 +144,26 @@ const menuOptions = [
       },
     ]
   },
+  {
+    label: '图片管理',
+    key: '/photo-control',
+    icon: renderIcon(List),
+    children: [
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'photo-list'
+              }
+            },
+            {default: () => "图片列表"}
+        ),
+        key: '/photo-control/photo-list',
+        icon: renderIcon(AppsSharp)
+      },
+    ]
+  },
 ]
 const user = ref({
   username: '',

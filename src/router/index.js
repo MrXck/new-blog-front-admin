@@ -69,6 +69,24 @@ const routes = [
                   },
               ]
           },
+          {
+              path: 'photo-control',
+              name: 'photo-control',
+              redirect: '/photo-control/photo-list',
+              meta: {
+                  title: '图片管理'
+              },
+              children: [
+                  {
+                      path: 'photo-list',
+                      name: 'photo-list',
+                      component: () => import('../views/photo-control/PhotoList'),
+                      meta: {
+                          title: '图片列表'
+                      }
+                  },
+              ]
+          },
       ]
     },
     {
