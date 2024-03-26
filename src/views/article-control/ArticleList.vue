@@ -3,7 +3,7 @@ import {NButton, NDataTable, NSpace, NPagination, useMessage, NInput, NImage, NS
 import {to} from '@/utils/routerUtils'
 import {h, onMounted, reactive, ref} from "vue";
 import {deleteArticleByIdApi, getArticlesByPageApi} from "@/utils/apiUtils";
-import {BASEURL} from "@/utils/Constant";
+import {IMAGE_URL} from "@/utils/Constant";
 
 
 const data = reactive([])
@@ -18,7 +18,7 @@ const columns = [
     key: 'cover',
     render(row) {
       return h(NImage, {
-        src: BASEURL + row.cover,
+        src: IMAGE_URL + row.cover,
         width: '100'
       });
     }

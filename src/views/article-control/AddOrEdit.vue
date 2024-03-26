@@ -66,7 +66,7 @@
               <n-icon v-show="data.cover === null" size="48" :depth="3">
                 <archive-icon/>
               </n-icon>
-              <n-image @click.stop width="100%" v-show="data.cover !== null" :src="BASEURL + data.cover"></n-image>
+              <n-image @click.stop width="100%" v-show="data.cover !== null" :src="IMAGE_URL + data.cover"></n-image>
             </n-upload-dragger>
           </n-upload>
         </n-space>
@@ -153,7 +153,7 @@ import breaks from "@bytemd/plugin-breaks";
 import zhHans from 'bytemd/locales/zh_Hans.json'
 import 'bytemd/dist/index.css'
 import 'highlight.js/styles/tokyo-night-dark.min.css'
-import {ArticleStatus, ArticleType, BASEURL} from "@/utils/Constant";
+import {ArticleStatus, ArticleType, IMAGE_URL} from "@/utils/Constant";
 
 const plugins = [
   gfm(),
@@ -311,7 +311,7 @@ async function handleUploadFile(files) {
     return [
       {
         title: split[split.length - 1],
-        url: BASEURL + res,
+        url: IMAGE_URL + res,
       },
     ]
   } else {
@@ -354,7 +354,7 @@ onMounted(() => {
         fileList.value = [{
           id: "c",
           status: "finished",
-          url: BASEURL + data.value.cover
+          url: IMAGE_URL + data.value.cover
         }]
       } else {
         message.error(res.msg)
