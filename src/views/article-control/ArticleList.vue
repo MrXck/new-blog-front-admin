@@ -1,5 +1,5 @@
 <script setup>
-import {NButton, NDataTable, NSpace, NPagination, useMessage, NInput, NImage, NSwitch} from 'naive-ui'
+import {NButton, NDataTable, NImage, NInput, NPagination, NSpace, NSwitch, useMessage, NTag} from 'naive-ui'
 import {to} from '@/utils/routerUtils'
 import {h, onMounted, reactive, ref} from "vue";
 import {deleteArticleByIdApi, getArticlesByPageApi} from "@/utils/apiUtils";
@@ -7,6 +7,7 @@ import {IMAGE_URL} from "@/utils/Constant";
 
 
 const data = reactive([])
+const tags = reactive([])
 const keyword = ref('')
 const columns = [
   {
@@ -29,30 +30,56 @@ const columns = [
   },
   {
     title: '分类',
-    key: 'categoryId',
+    key: 'categoryName',
   },
   {
     title: '标签',
-    key: 'title',
+    render(row) {
+
+
+      return h("div", {
+        'style': 'display: flex; flex-wrap: wrap;'
+      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {}, item.tagName))])
+    }
   },
   {
     title: '类型',
     key: 'type',
+    render(row) {
+      if (row.type === 1) {
+        return h(NTag, {}, "原创")
+      }
+      if (row.type === 2) {
+        return h(NTag, {}, "转载")
+      }
+      if (row.type === 3) {
+        return h(NTag, {}, "翻译")
+      }
+    }
   },
   {
     title: '顶置',
     render(row) {
-      return undefined
+      return h(NSwitch, {
+        'default-value': row.isTop,
+        'checked-value': 1,
+        'unchecked-value': 0,
+        'on-update:value': (value) => {
+          console.log(value)
+        }
+      })
     }
   },
   {
     title: '推荐',
     render(row) {
-      // todo 修改不生效
       return h(NSwitch, {
-        'v-model:value': row.isFeatured,
+        'default-value': row.isFeatured,
         'checked-value': 1,
-        'unchecked-value': 0
+        'unchecked-value': 0,
+        'on-update:value': (value) => {
+          console.log(value)
+        }
       })
     }
   },
@@ -60,12 +87,6 @@ const columns = [
     title: '创建时间',
     render(row) {
       return row.createTime.replace('T', ' ')
-    }
-  },
-  {
-    title: '修改时间',
-    render(row) {
-      return row.updateTime?.replace('T', ' ')
     }
   },
   {
@@ -125,11 +146,13 @@ function init() {
   }).then(res => {
     if (res.code === 0) {
       data.length = 0
-      let page = res.data.page
-      pagination.totalPage = page.pages
-      pagination.total = page.total
-      for (let i = 0; i < page.records.length; i++) {
-        let record = page.records[i]
+      tags.length = 0
+      let page = res.data.articleVOS
+      pagination.totalPage = page.count > pagination.pageSize ? Math.ceil(page.count / pagination.pageSize) : 1
+      pagination.total = page.count
+      tags.push(...res.data.articleTagVOS)
+      for (let i = 0; i < page.length; i++) {
+        let record = page[i]
         record.key = i + 1
         data.push(record)
       }
@@ -163,7 +186,7 @@ onMounted(() => {
   <n-space vertical>
     <n-space>
       <n-button type="info" @click="to({name: 'article-add'})">新增</n-button>
-      <n-input placeholder="请输入标题" v-model:value="keyword" @keydown.enter="init" />
+      <n-input placeholder="请输入标题" v-model:value="keyword" @keydown.enter="init"/>
       <n-button @click="init">搜索</n-button>
     </n-space>
     <n-data-table
@@ -173,7 +196,7 @@ onMounted(() => {
         :row-key="rowKey"
     />
     <n-space justify="end" align="center">
-      <div>共 {{pagination.total}} 条</div>
+      <div>共 {{ pagination.total }} 条</div>
       <n-pagination
           v-show="pagination.totalPage >= 1"
           v-model:page="pagination.page"
