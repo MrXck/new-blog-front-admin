@@ -87,6 +87,32 @@ const routes = [
                   },
               ]
           },
+          {
+              path: 'permission-control',
+              name: 'permission-control',
+              redirect: '/permission-control/role-list',
+              meta: {
+                  title: '权限管理'
+              },
+              children: [
+                  {
+                      path: 'role-list',
+                      name: 'role-list',
+                      component: () => import('../views/permission-control/RoleList'),
+                      meta: {
+                          title: '角色管理'
+                      }
+                  },
+                  {
+                      path: 'api-list',
+                      name: 'api-list',
+                      component: () => import('../views/permission-control/ApiList'),
+                      meta: {
+                          title: '接口管理'
+                      }
+                  },
+              ]
+          },
       ]
     },
     {

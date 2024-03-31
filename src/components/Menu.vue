@@ -164,6 +164,39 @@ const menuOptions = [
       },
     ]
   },
+  {
+    label: '权限管理',
+    key: '/permission-control',
+    icon: renderIcon(List),
+    children: [
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'role-list'
+              }
+            },
+            {default: () => "角色管理"}
+        ),
+        key: '/permission-control/role-list',
+        icon: renderIcon(AppsSharp)
+      },
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'api-list'
+              }
+            },
+            {default: () => "接口管理"}
+        ),
+        key: '/permission-control/api-list',
+        icon: renderIcon(AppsSharp)
+      },
+    ]
+  },
 ]
 const user = ref({
   username: '',
