@@ -42,7 +42,7 @@ const columns = [
     render(row) {
       return h("div", {
         'style': 'display: flex; flex-wrap: wrap;'
-      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {type: 'info'}, item.tagName))])
+      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {type: 'info'}, () => item.tagName))])
     }
   },
   {
@@ -50,13 +50,13 @@ const columns = [
     key: 'type',
     render(row) {
       if (row.type === 1) {
-        return h(NTag, {type: 'error'}, "原创")
+        return h(NTag, {type: 'error'}, () => "原创")
       }
       if (row.type === 2) {
-        return h(NTag, {type: 'error'}, "转载")
+        return h(NTag, {type: 'error'}, () => "转载")
       }
       if (row.type === 3) {
-        return h(NTag, {type: 'error'}, "翻译")
+        return h(NTag, {type: 'error'}, () => "翻译")
       }
     }
   },
