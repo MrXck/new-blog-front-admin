@@ -23,7 +23,3 @@ export function updateRoleApi(data) {
 export function updateRoleDisableApi(id, isDisable) {
     return request.get(`/role/disable/${id}/${isDisable}`)
 }
-
-export function getResourceByRoleIdApi(id) {
-    return request.get(`/roleResource/resource/${id}`)
-}

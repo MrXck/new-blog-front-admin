@@ -165,6 +165,26 @@ const menuOptions = [
     ]
   },
   {
+    label: '用户管理',
+    key: '/user-control',
+    icon: renderIcon(List),
+    children: [
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'user-list'
+              }
+            },
+            {default: () => "用户列表"}
+        ),
+        key: '/user-control/user-list',
+        icon: renderIcon(AppsSharp)
+      },
+    ]
+  },
+  {
     label: '权限管理',
     key: '/permission-control',
     icon: renderIcon(List),

@@ -1,25 +1,30 @@
 <script setup>
-import {NButton, NDataTable, NInput, NPagination, NSpace, useMessage, NModal, NCard, NIcon, NSwitch, NTree} from 'naive-ui'
+import {
+  NButton,
+  NDataTable,
+  NInput,
+  NPagination,
+  NSpace,
+  useMessage,
+  NModal,
+  NCard,
+  NIcon,
+  NImage,
+  NSwitch,
+  NSelect
+} from 'naive-ui'
 import {h, onMounted, reactive, ref} from "vue";
 import {Close} from "@vicons/ionicons5";
-import {
-  addRoleApi,
-  deleteRoleByIdApi,
-  getRoleByPageApi,
-  updateRoleApi, updateRoleDisableApi,
-} from "@/api/roleApi";
-import {getAllResourceApi} from "@/api/resourceApi";
-import {getResourceByRoleIdApi} from "@/api/roleResourceApi";
+import {IMAGE_URL} from "@/utils/Constant";
+import {deleteUserByIdApi, getUserByPageApi, updateUserApi, updateUserDisableApi} from "@/api/userApi";
+import {getAllRoleApi} from "@/api/roleApi";
+import {getRoleByUserIdApi} from "@/api/userRoleApi";
 
 const update = ref({
   id: '',
-  name: '',
-  resourceIds: []
+  nickname: '',
+  roleIds: []
 })
-const add = ref({
-  name: ''
-})
-const showAddModal = ref(false)
 const showUpdateModal = ref(false)
 const data = reactive([])
 const keyword = ref('')
@@ -29,18 +34,41 @@ const columns = [
     key: 'key'
   },
   {
-    title: '名称',
-    key: 'name',
+    title: '用户名',
+    key: 'username',
+  },
+  {
+    title: '邮箱',
+    key: 'email',
+  },
+  {
+    title: '昵称',
+    key: 'nickname',
+  },
+  {
+    title: '头像',
+    key: 'avatar',
+    render(row) {
+      return h(NImage, {
+        src: IMAGE_URL + row.avatar,
+        width: '100'
+      })
+    }
+  },
+  {
+    title: '介绍',
+    key: 'intro',
   },
   {
     title: '禁用',
+    key: 'isDisable',
     render(row) {
       return h(NSwitch, {
         'default-value': row.isDisable,
         'checked-value': 1,
         'unchecked-value': 0,
         'on-update:value': (value) => {
-          updateRoleDisableApi(row.id, value).then(res => {
+          updateUserDisableApi(row.id, value).then(res => {
             if (res.code === 0) {
               message.success('操作成功')
             } else {
@@ -58,6 +86,12 @@ const columns = [
     }
   },
   {
+    title: '最后登录时间',
+    render(row) {
+      return row.lastLoginTime.replace('T', ' ')
+    }
+  },
+  {
     title: '操作',
     render(row) {
       return h('div',
@@ -69,9 +103,9 @@ const columns = [
                   ghost: true,
                   onClick: () => {
                     update.value.id = row.id
-                    update.value.name = row.name
+                    update.value.nickname = row.nickname
+                    getRoleByUserId(row.id)
                     showUpdateModal.value = true
-                    getResourceByRoleId(row.id)
                   }
                 },
                 {default: () => "编辑"}),
@@ -91,10 +125,7 @@ const columns = [
     }
   },
 ]
-const defaultUpdateKeys = reactive([])
-const defaultAddKeys = reactive([])
 const message = useMessage()
-const totalResource = reactive([])
 const pagination = reactive({
   page: 1,
   pageSize: 15,
@@ -111,48 +142,10 @@ const pagination = reactive({
     init()
   },
 })
-
-function getResourceByRoleId(id) {
-  getResourceByRoleIdApi(id).then(res => {
-    if (res.code === 0) {
-      const data = res.data.resources
-      defaultUpdateKeys.length = 0
-      defaultUpdateKeys.push(...data.map(item => item.id))
-    }
-  })
-}
-
-function getAllResource() {
-  getAllResourceApi().then(res => {
-    if (res.code === 0) {
-      totalResource.length = []
-    }
-
-    const data = res.data.resources
-    data.map(item => {
-      if (!item.parentId) {
-        totalResource.push({
-          label: item.name,
-          key: item.id,
-          children: []
-        })
-      }
-    })
-
-    data.map(item => {
-      if (item.parentId) {
-        totalResource.find(obj => obj.key === item.parentId).children.push({
-          label: item.name,
-          key: item.id,
-        })
-      }
-    })
-
-  })
-}
+const roles = reactive([])
 
 function init() {
-  getRoleByPageApi({
+  getUserByPageApi({
     pageSize: pagination.pageSize,
     pageNum: pagination.page,
     keyword: keyword.value
@@ -174,7 +167,7 @@ function init() {
 }
 
 function deleteById(id) {
-  deleteRoleByIdApi(id).then(res => {
+  deleteUserByIdApi(id).then(res => {
     if (res.code === 0) {
       message.success('操作成功')
       init()
@@ -189,7 +182,7 @@ function rowKey(row) {
 }
 
 function updateData() {
-  updateRoleApi(update.value).then(res => {
+  updateUserApi(update.value).then(res => {
     if (res.code === 0) {
       message.success('操作成功')
       showUpdateModal.value = false
@@ -201,37 +194,35 @@ function updateData() {
   })
 }
 
-function addData() {
-  addRoleApi(add.value).then(res => {
+function initRoles() {
+  getAllRoleApi().then(res => {
     if (res.code === 0) {
-      message.success('操作成功')
-      showAddModal.value = false
-      init()
-    } else {
-      message.error(res.msg)
-      init()
+      roles.length = 0
+      roles.push(...res.data.roles.map(item => {
+        return {
+          label: item.name,
+          value: item.id
+        }
+      }))
     }
   })
 }
 
-function updateUpdateCheckedKeys(keys, options, meta) {
-  update.value.resourceIds = keys
-}
-
-function updateAddCheckedKeys(keys, options, meta) {
-  add.value.resourceIds = keys
+function getRoleByUserId(id) {
+  getRoleByUserIdApi(id).then(res => {
+    update.value.roleIds = res.data.userRoles.map(item => item.roleId)
+  })
 }
 
 onMounted(() => {
   init()
-  getAllResource()
+  initRoles()
 })
 </script>
 
 <template>
   <n-space vertical>
     <n-space>
-      <n-button type="info" @click="showAddModal = true">新增</n-button>
       <n-input placeholder="请输入标题" v-model:value="keyword" @keydown.enter="init"/>
       <n-button @click="init">搜索</n-button>
     </n-space>
@@ -259,47 +250,6 @@ onMounted(() => {
     </n-space>
   </n-space>
 
-  <n-modal v-model:show="showAddModal">
-    <n-card
-        style="width: 500px"
-        title="新增"
-        :bordered="false"
-        size="huge"
-        role="dialog"
-        aria-modal="true"
-    >
-      <template #header-extra>
-        <n-button circle size="small" strong secondary @click="showAddModal = false">
-          <template #icon>
-            <n-icon>
-              <Close/>
-            </n-icon>
-          </template>
-        </n-button>
-      </template>
-      <n-space align="center">
-        <n-space>
-          角色名
-        </n-space>
-        <n-space>
-          <n-input v-model:value="add.name" placeholder="请输入分类名"/>
-        </n-space>
-      </n-space>
-      <n-tree
-          block-line
-          cascade
-          checkable
-          :selectable="false"
-          :data="totalResource"
-          :default-checked-keys="defaultAddKeys"
-          @update:checked-keys="updateAddCheckedKeys"
-      />
-      <template #footer>
-        <n-button type="info" @click="addData">保存</n-button>
-      </template>
-    </n-card>
-  </n-modal>
-
   <n-modal v-model:show="showUpdateModal">
     <n-card
         style="width: 500px"
@@ -318,23 +268,31 @@ onMounted(() => {
           </template>
         </n-button>
       </template>
-      <n-space align="center">
-        <n-space>
-          角色名
+      <n-space>
+        <n-space align="center">
+          <n-space>
+            昵称
+          </n-space>
+          <n-space>
+            <n-input v-model:value="update.nickname" placeholder="请输入昵称"/>
+          </n-space>
         </n-space>
-        <n-space>
-          <n-input v-model:value="update.name" placeholder="请输入分类名"/>
+        <n-space align="center">
+          <n-space>
+            角色
+          </n-space>
+          <n-space>
+            <n-select
+                filterable
+                multiple
+                :options="roles"
+                style="width: 300px"
+                v-model:value="update.roleIds"
+            >
+            </n-select>
+          </n-space>
         </n-space>
       </n-space>
-      <n-tree
-          block-line
-          cascade
-          checkable
-          :selectable="false"
-          :data="totalResource"
-          :default-checked-keys="defaultUpdateKeys"
-          @update:checked-keys="updateUpdateCheckedKeys"
-      />
       <template #footer>
         <n-button type="info" @click="updateData">保存</n-button>
       </template>

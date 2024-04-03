@@ -11,3 +11,19 @@ export function loginApi(data) {
 export function registerApi(data) {
     return request.post("/user/register", data)
 }
+
+export function getUserByPageApi(data) {
+    return request.post('/user/page', data)
+}
+
+export function deleteUserByIdApi(id) {
+    return request.delete('/user/' + id)
+}
+
+export function updateUserApi(data) {
+    return request.put('/user/update', data)
+}
+
+export function updateUserDisableApi(id, disable) {
+    return request.get(`/user/disable/${id}/${disable}`)
+}

@@ -113,6 +113,24 @@ const routes = [
                   },
               ]
           },
+          {
+              path: 'user-control',
+              name: 'user-control',
+              redirect: '/user-control/user-list',
+              meta: {
+                  title: '用户管理'
+              },
+              children: [
+                  {
+                      path: 'user-list',
+                      name: 'user-list',
+                      component: () => import('../views/user-control/UserList'),
+                      meta: {
+                          title: '用户列表'
+                      }
+                  },
+              ]
+          },
       ]
     },
     {
