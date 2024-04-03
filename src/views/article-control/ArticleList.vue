@@ -5,9 +5,7 @@ import {h, onMounted, reactive, ref} from "vue";
 import {IMAGE_URL} from "@/utils/Constant";
 import {
   deleteArticleByIdApi,
-  getArticlesByPageApi,
-  uploadArticleFeaturedApi,
-  uploadArticleTopApi
+  getArticlesByPageApi, updateArticleFeaturedApi, updateArticleTopApi,
 } from "@/api/articleApi";
 
 
@@ -68,7 +66,7 @@ const columns = [
         'checked-value': 1,
         'unchecked-value': 0,
         'on-update:value': (value) => {
-          uploadArticleTopApi(row.id, value).then(res => {
+          updateArticleTopApi(row.id, value).then(res => {
             if (res.code === 0) {
               message.success('操作成功')
             } else {
@@ -87,7 +85,7 @@ const columns = [
         'checked-value': 1,
         'unchecked-value': 0,
         'on-update:value': (value) => {
-          uploadArticleFeaturedApi(row.id, value).then(res => {
+          updateArticleFeaturedApi(row.id, value).then(res => {
             if (res.code === 0) {
               message.success('操作成功')
             } else {

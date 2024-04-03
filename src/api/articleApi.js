@@ -20,10 +20,10 @@ export function updateArticleByIdApi(data) {
     return request.put("/article/update", data)
 }
 
-export function uploadArticleTopApi(id, isTop) {
-    return request.get(`/article/top/${id}/${isTop}`)
+export function updateArticleTopApi(id, top) {
+    return request.get(`/article/top/${id}/${top}`)
 }
 
-export function uploadArticleFeaturedApi(id, isTop) {
-    return request.get(`/article/featured/${id}/${isTop}`)
+export function updateArticleFeaturedApi(id, feature) {
+    return request.get(`/article/featured/${id}/${feature}`)
 }
