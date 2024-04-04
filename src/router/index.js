@@ -131,6 +131,24 @@ const routes = [
                   },
               ]
           },
+          {
+              path: 'log-control',
+              name: 'log-control',
+              redirect: '/log-control/operation-log-list',
+              meta: {
+                  title: '用户管理'
+              },
+              children: [
+                  {
+                      path: 'operation-log-list',
+                      name: 'operation-log-list',
+                      component: () => import('../views/log-control/OperationLogList'),
+                      meta: {
+                          title: '操作日志'
+                      }
+                  },
+              ]
+          },
       ]
     },
     {

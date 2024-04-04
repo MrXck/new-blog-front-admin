@@ -217,6 +217,26 @@ const menuOptions = [
       },
     ]
   },
+  {
+    label: '日志相关',
+    key: '/log-control',
+    icon: renderIcon(List),
+    children: [
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'operation-log-list'
+              }
+            },
+            {default: () => "操作日志"}
+        ),
+        key: '/log-control/operation-log-list',
+        icon: renderIcon(AppsSharp)
+      },
+    ]
+  },
 ]
 const user = ref({
   username: '',
