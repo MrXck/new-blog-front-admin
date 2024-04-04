@@ -115,9 +115,9 @@ const pagination = reactive({
 function getResourceByRoleId(id) {
   getResourceByRoleIdApi(id).then(res => {
     if (res.code === 0) {
-      const data = res.data.resources
+      const data = res.data.roleResources
       defaultUpdateKeys.length = 0
-      defaultUpdateKeys.push(...data.map(item => item.id))
+      defaultUpdateKeys.push(...data.map(item => item.resourceId))
     }
   })
 }
