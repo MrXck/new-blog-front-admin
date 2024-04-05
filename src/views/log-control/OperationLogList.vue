@@ -19,6 +19,7 @@ const columns = [
   {
     title: '请求路径',
     key: 'path',
+    width: 200
   },
   {
     title: '用户id',
@@ -48,6 +49,7 @@ const columns = [
   },
   {
     title: '操作',
+    width: 150,
     render(row) {
       return h('div',
           [
@@ -187,51 +189,48 @@ onMounted(() => {
           </template>
         </n-button>
       </template>
-      <n-space>
-        <n-space align="center" vertical>
+      <n-space vertical>
+        <n-space vertical>
           <n-space>
             请求路径
           </n-space>
-          <n-space>
+          <n-space item-style="width: 500px">
             <n-input v-model:value="log.path" disabled/>
           </n-space>
         </n-space>
-        <n-space align="center" vertical>
+        <n-space vertical>
           <n-space>
             请求方式
           </n-space>
-          <n-space>
+          <n-space item-style="width: 500px">
             <n-input v-model:value="log.method" disabled/>
           </n-space>
         </n-space>
-        <n-space align="center" vertical>
+        <n-space vertical>
           <n-space>
             请求耗时
           </n-space>
-          <n-space>
+          <n-space item-style="width: 500px">
             <n-input v-model:value="log.consuming" disabled/>
           </n-space>
         </n-space>
-        <n-space align="center" vertical>
+        <n-space vertical>
           <n-space>
             请求参数
           </n-space>
-          <n-space>
-            <n-input type="textarea" :rows="3" v-model:value="log.param" disabled/>
+          <n-space item-style="width: 500px">
+            <n-input type="textarea" :rows="3" placeholder="无" v-model:value="log.param" disabled/>
           </n-space>
         </n-space>
-        <n-space align="center" vertical>
+        <n-space vertical>
           <n-space>
             响应结果
           </n-space>
-          <n-space>
-            <n-input type="textarea" :rows="3" v-model:value="log.response" disabled/>
+          <n-space item-style="width: 500px">
+            <n-input type="textarea" :rows="3" placeholder="无" v-model:value="log.response" disabled/>
           </n-space>
         </n-space>
       </n-space>
-      <template #footer>
-        <n-button type="info" @click="addData">保存</n-button>
-      </template>
     </n-card>
   </n-modal>
 </template>
