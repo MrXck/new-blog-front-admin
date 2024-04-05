@@ -13,7 +13,7 @@ export function deleteTagByIdApi(id) {
 }
 
 export function addTagApi(data) {
-    return request.post('/tag/add', data)
+    return request.post('/tag/insert', data)
 }
 
 export function updateTagApi(data) {

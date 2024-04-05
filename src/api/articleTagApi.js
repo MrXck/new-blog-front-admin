@@ -5,5 +5,5 @@ export function getArticleTagApi(id) {
 }
 
 export function saveArticleTagApi(data) {
-    return request.post(`/articleTag/save`, data)
+    return request.post(`/articleTag/insertByArticleId`, data)
 }

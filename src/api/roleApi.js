@@ -13,7 +13,7 @@ export function deleteRoleByIdApi(id) {
 }
 
 export function addRoleApi(data) {
-    return request.post('/role/add', data)
+    return request.post('/role/insert', data)
 }
 
 export function updateRoleApi(data) {

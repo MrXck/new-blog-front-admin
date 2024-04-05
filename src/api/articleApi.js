@@ -13,7 +13,7 @@ export function getArticleByIdApi(id) {
 }
 
 export function addArticleApi(data) {
-    return request.post("/article/add", data)
+    return request.post("/article/insert", data)
 }
 
 export function updateArticleByIdApi(data) {

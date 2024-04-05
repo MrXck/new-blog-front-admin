@@ -17,11 +17,11 @@ export function deleteResourceParentByIdApi(id) {
 }
 
 export function addResourceApi(data) {
-    return request.post('/resource/addResource', data)
+    return request.post('/resource/insertResource', data)
 }
 
 export function addResourceParentApi(data) {
-    return request.post('/resource/addResourceParent', data)
+    return request.post('/resource/insertResourceParent', data)
 }
 
 export function updateResourceApi(data) {

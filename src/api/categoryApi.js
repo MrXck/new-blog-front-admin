@@ -9,7 +9,7 @@ export function deleteCategoryByIdApi(id) {
 }
 
 export function addCategoryApi(data) {
-    return request.post('/category/add', data)
+    return request.post('/category/insert', data)
 }
 
 export function updateCategoryApi(data) {
