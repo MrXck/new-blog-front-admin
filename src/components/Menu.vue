@@ -180,6 +180,19 @@ const menuOptions = [
         key: '/user-control/user-list',
         icon: renderIcon(AppsSharp)
       },
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'online-user-list'
+              }
+            },
+            {default: () => "在线用户列表"}
+        ),
+        key: '/user-control/online-user-list',
+        icon: renderIcon(AppsSharp)
+      },
     ]
   },
   {

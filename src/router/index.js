@@ -129,6 +129,14 @@ const routes = [
                           title: '用户列表'
                       }
                   },
+                  {
+                      path: 'online-user-list',
+                      name: 'online-user-list',
+                      component: () => import('../views/user-control/OnlineUserList'),
+                      meta: {
+                          title: '在线用户列表'
+                      }
+                  },
               ]
           },
           {
@@ -136,7 +144,7 @@ const routes = [
               name: 'log-control',
               redirect: '/log-control/operation-log-list',
               meta: {
-                  title: '用户管理'
+                  title: '日志管理'
               },
               children: [
                   {

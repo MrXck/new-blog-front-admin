@@ -27,3 +27,11 @@ export function updateUserApi(data) {
 export function updateUserDisableApi(id, disable) {
     return request.get(`/user/disable/${id}/${disable}`)
 }
+
+export function getOnlineUserByPageApi(data) {
+    return request.post(`/user/online/page`, data)
+}
+
+export function offlineUserByIdApi(id) {
+    return request.delete(`/user/offline/${id}`)
+}
