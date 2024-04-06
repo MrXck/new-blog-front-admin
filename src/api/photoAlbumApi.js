@@ -8,6 +8,10 @@ export function deletePhotoAlbumByIdApi(id) {
     return request.delete('/photoAlbum/' + id)
 }
 
+export function getPhotoAlbumByIdApi(id) {
+    return request.get('/photoAlbum/' + id)
+}
+
 export function addPhotoAlbumApi(data) {
     return request.post('/photoAlbum/insert', data)
 }

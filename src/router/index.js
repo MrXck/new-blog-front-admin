@@ -93,6 +93,14 @@ const routes = [
                           title: '相册列表'
                       }
                   },
+                  {
+                      path: 'photo-album-detail/:id',
+                      name: 'photo-album-detail',
+                      component: () => import('../views/photo-control/PhotoAlbumDetail'),
+                      meta: {
+                          title: '相册详情'
+                      }
+                  },
               ]
           },
           {

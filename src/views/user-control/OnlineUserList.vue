@@ -10,8 +10,7 @@ import {
 } from 'naive-ui'
 import {h, onMounted, reactive, ref} from "vue";
 import {IMAGE_URL} from "@/utils/Constant";
-import {getOnlineUserByPageApi, getUserByPageApi, offlineUserByIdApi} from "@/api/userApi";
-import {getAllRoleApi} from "@/api/roleApi";
+import {getOnlineUserByPageApi, offlineUserByIdApi} from "@/api/userApi";
 
 const update = ref({
   id: '',

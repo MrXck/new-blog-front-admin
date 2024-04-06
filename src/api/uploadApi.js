@@ -7,3 +7,11 @@ export function uploadImageApi(formData, config = {
 }) {
     return request.post("/file/uploadImage", formData, config)
 }
+
+export function uploadImagePhotoApi(formData, config = {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+}) {
+    return request.post("/file/uploadImagePhoto", formData, config)
+}
