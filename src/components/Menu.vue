@@ -160,6 +160,19 @@ const menuOptions = [
         key: '/photo-control/photo-list',
         icon: renderIcon(AppsSharp)
       },
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'photo-album-list'
+              }
+            },
+            {default: () => "相册列表"}
+        ),
+        key: '/photo-control/photo-album-list',
+        icon: renderIcon(AppsSharp)
+      },
     ]
   },
   {
