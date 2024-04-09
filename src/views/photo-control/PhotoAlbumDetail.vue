@@ -59,6 +59,8 @@ function addData() {
   }).then(res => {
     if (res.code === 0) {
       message.success("操作成功")
+      showAddModal.value = false
+      init()
     } else {
       message.error(res.msg)
     }
