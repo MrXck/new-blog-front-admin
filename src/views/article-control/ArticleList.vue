@@ -10,7 +10,6 @@ import {
 
 
 const data = reactive([])
-const tags = reactive([])
 const keyword = ref('')
 const columns = [
   {
@@ -40,7 +39,7 @@ const columns = [
     render(row) {
       return h("div", {
         'style': 'display: flex; flex-wrap: wrap;'
-      }, [tags.filter((data, index, array) => data.articleId === row.id).map(item => h(NTag, {type: 'info'}, () => item.tagName))])
+      }, [row.tagList.map(item => h(NTag, {type: 'info'}, () => item))])
     }
   },
   {
@@ -159,11 +158,9 @@ function init() {
   }).then(res => {
     if (res.code === 0) {
       data.length = 0
-      tags.length = 0
       let page = res.data.articleVOS
       pagination.totalPage = page.count > pagination.pageSize ? Math.ceil(page.count / pagination.pageSize) : 1
       pagination.total = page.count
-      tags.push(...res.data.articleTagVOS)
       for (let i = 0; i < page.length; i++) {
         let record = page[i]
         record.key = i + 1
