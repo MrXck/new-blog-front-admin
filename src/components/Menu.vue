@@ -261,6 +261,26 @@ const menuOptions = [
       },
     ]
   },
+  {
+    label: '网站相关',
+    key: '/website-control',
+    icon: renderIcon(List),
+    children: [
+      {
+        label: () => h(
+            RouterLink,
+            {
+              to: {
+                name: 'website-config'
+              }
+            },
+            {default: () => "网站配置"}
+        ),
+        key: '/website-control/website-config',
+        icon: renderIcon(AppsSharp)
+      },
+    ]
+  },
 ]
 const user = ref({
   username: '',

@@ -173,6 +173,24 @@ const routes = [
                   },
               ]
           },
+          {
+              path: 'website-control',
+              name: 'website-control',
+              redirect: '/website-control/website-config',
+              meta: {
+                  title: '网站相关'
+              },
+              children: [
+                  {
+                      path: 'website-config',
+                      name: 'website-config',
+                      component: () => import('../views/website-control/WebsiteConfig'),
+                      meta: {
+                          title: '网站配置'
+                      }
+                  },
+              ]
+          },
       ]
     },
     {
