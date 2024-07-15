@@ -1,5 +1,5 @@
 <template>
-  <n-space vertical>
+  <n-space vertical v-if="!isLoading">
     <n-input placeholder="请输入标题" v-model:value="data.title"/>
     <Editor :locale="zhHans" :upload-images="handleUploadFile" :value="data.content" :plugins="plugins"
             @change="handleChange"/>
@@ -346,7 +346,8 @@ onMounted(() => {
     data.value.id = route.params.id
     getArticleByIdApi(route.params.id).then(res => {
       if (res.code === 0) {
-        data.value = res.data.article
+        data.value = res.data.articleVO
+        console.log(res.data)
         getArticleTag()
         fileList.value = [{
           id: "c",
@@ -356,6 +357,8 @@ onMounted(() => {
       } else {
         message.error(res.msg)
       }
+    }).finally(() => {
+      isLoading.value = false
     })
   } else {
     isLoading.value = false
